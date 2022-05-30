@@ -44,7 +44,7 @@ class Sales extends Connection
         while ($row = $result->fetch_assoc()) {
             $row['customer'] = $row['customer_id'] > 0 ? $Customers->name($row['customer_id']) : 'walk-in';
             $row['total'] = number_format($this->total($row['sales_id']), 2);
-            $row['inv_ref'] = $row['reference_number']." (₱".number_format($this->dr_balance($row['sales_id']),2).")";
+            
             $rows[] = $row;
         }
         return $rows;
@@ -122,8 +122,8 @@ class Sales extends Connection
         $result = $this->select($this->table_detail, '*', $param);
         while ($row = $result->fetch_assoc()) {
             $row['product'] = $Products->name($row['product_id']);
-            $row['amount'] = number_format($row['quantity'] * $row['price'], 2);
-            $row['pos_qty'] = number_format($row['quantity']);
+            $row['amount'] = number_format($row['qty'] * $row['price'], 2);
+            $row['pos_qty'] = number_format($row['qty']);
             $row['pos_price'] = "@".$row['price'];
             $row['count'] = $count++;
             $rows[] = $row;
@@ -139,7 +139,7 @@ class Sales extends Connection
 
     public function total($primary_id)
     {
-        $result = $this->select($this->table_detail, 'sum(quantity*price)', "$this->pk = '$primary_id'");
+        $result = $this->select($this->table_detail, 'sum(qty*price)', "$this->pk = '$primary_id'");
         $row = $result->fetch_array();
         return $row[0];
     }
@@ -198,87 +198,5 @@ class Sales extends Connection
         return $row[0];
     }
 
-    public function edit_detail()
-    {
-        $sales_detail_id = $this->inputs['sales_detail_id'];
-        $form = array(
-            'quantity'   => $this->inputs['quantity']
-        );
-        return $this->update($this->table_detail, $form, " $this->pk2 = '$sales_detail_id'");
-    }
 
-    public function addSalesPOS(){
-        
-        if($this->inputs['product_id'] == "" || $this->inputs['product_id'] <= 0){
-            $Products = new Products;
-            $this->inputs['product_id'] = $Products->productID($this->inputs['product_code']);
-        }
-
-        if($this->inputs['product_id'] > 0){
-            $reference_number = $this->inputs['reference_number'];
-            $param = "reference_number = '$reference_number'";
-            $sales_id = $this->add();
-
-            if($sales_id == -2){
-                $sales_id = $this->getID($param);
-            }
-
-            $this->inputs[$this->pk] = $sales_id;
-
-            $res = $this->add_detail();
-
-            if($res == 2){
-                $qty = $this->inputs['quantity'];
-                $this->inputs['param'] = "sales_id = $sales_id AND product_id = ".$this->inputs['product_id']." ";
-                $detail_row = $this->show_detail();
-
-                $this->inputs['quantity'] = $detail_row[0]['quantity'] + $qty;
-                $this->inputs['sales_detail_id'] = $detail_row[0]['sales_detail_id'];
-                $this->edit_detail();
-            }
-            
-            return 1;
-        }else{
-            return "Cannot find item. Please try again.";
-        }
-    }
-
-    public function getDetailsPOS(){
-        //$row = $this->show();
-        //$sales_id = $row[0]['sales_id'];
-        $sales_id = $this->getID($this->inputs['param']);
-        $this->inputs['param'] = "sales_id = '$sales_id' ORDER BY date_added DESC";
-        return $this->show_detail();
-    }
-
-    public function finishSalesPOS(){
-        $reference_number = $this->inputs['reference_number'];
-        $param = "reference_number='$reference_number'";
-
-        $sales_id = $this->getID($param);
-        $this->inputs['id'] = $sales_id;
-
-        return $this->finish();
-    }
-
-    public function dr_balance($primary_id)
-    {
-        $dr_total = $this->total($primary_id);
-
-        $fetch_cp = $this->select('tbl_customer_payment_details as d, tbl_customer_payment as h', "sum(amount) as total", "d.sales_id = $primary_id AND h.cp_id=d.cp_id AND h.status='F'");
-        $paid_total = 0;
-        while ($row = $fetch_cp->fetch_assoc()) {
-            $paid_total += $row['total'];
-        }
-
-        return $dr_total-$paid_total;
-    }
-
-    public function totalSalesDays($days)
-    {
-       $fetchData = $this->select('tbl_sales_details as d, tbl_sales as h', "sum(quantity*price) as total", "h.sales_id = d.sales_id AND h.sales_date BETWEEN NOW() - INTERVAL $days DAY AND NOW() AND h.status='F'");
-        $row = $fetchData->fetch_assoc();
-
-        return $row['total'] == 0 ? 0 : $row['total'];
-    }
 }

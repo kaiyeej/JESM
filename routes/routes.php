@@ -10,7 +10,7 @@ $routes = array(
         'has_detail' => 0
     ),
     "sales" => array(
-        'class_name' => '',
+        'class_name' => 'Sales',
         'has_detail' => 1
     ),
     "customers" => array(
@@ -35,7 +35,7 @@ $routes = array(
 
 
 $base_folder = "pages/";
-$page = str_replace("/chmsc/", "", $request);
+$page = str_replace("/jesm/", "", $request);
 
 // chec if has parameters
 if (substr_count($page, "?") > 0) {

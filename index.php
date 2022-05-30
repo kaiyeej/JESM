@@ -14,9 +14,8 @@ include 'core/config.php';
     <link rel="shortcut icon" href="assets/images/logo/favicon.svg" type="image/x-icon">
     <link rel="shortcut icon" href="assets/images/logo/favicon.png" type="image/png">
     
-    <link rel="stylesheet" href="vendors/select2/select2.min.css">
-    <link rel="stylesheet" href="vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
     <link rel="stylesheet" href="vendors/sweetalert/sweetalert.css">
+    <link rel="stylesheet" href="assets/css/pages/form-element-select.css">
 
     <link rel="stylesheet" href="assets/css/shared/iconly.css">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -25,7 +24,7 @@ include 'core/config.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="vendors/datatables.net/jquery.dataTables.js"></script>
     <script src="vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-    <script src="vendors/select2/select2.min.js"></script>
+    <script src="assets/js/extensions/form-element-select.js"></script>
 </head>
 
 <body>

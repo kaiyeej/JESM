@@ -3,7 +3,7 @@
         <div class="float-start">
         </div>
         <div class="float-end">
-            <p>2022 &copy; CHMSCU</p>
+            <p>2022 &copy; jesmU</p>
         </div>
     </div>
 </footer>

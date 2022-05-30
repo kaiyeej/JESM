@@ -66,7 +66,7 @@ function getEntries() {
             },
             "columns": [{
                     "mRender": function(data, type, row) {
-                        return "<input type='checkbox' value=" + route_settings.class_name + " class='dt_id' style='position: initial; opacity:1;'>";
+                        return "<input type='checkbox' value=" + row.product_category_id + " class='dt_id' style='position: initial; opacity:1;'>";
                     }
                 },
                 {
