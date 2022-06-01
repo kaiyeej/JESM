@@ -12,7 +12,7 @@
                             <div class="form-group">
                                 <label><strong>Reference</strong></label>
                                 <div>
-                                    <input type="text" class="form-control form-control-sm input-item" name="input[reference_number]" maxlength="30" id="reference_number" readonly required>
+                                    <input type="text" class="form-control input-item" name="input[reference_number]" maxlength="30" id="reference_number" readonly required>
                                 </div>
                             </div>
                         </div>
@@ -20,6 +20,10 @@
                             <div class="form-group">
                                 <label><strong>Customer</strong></label>
                                 <select class="choices form-select" name="input[customer_id]" id="customer_id" required>
+                                    <option value="romboid">Romboid</option>
+                                    <option value="trapeze">Trapeze</option>
+                                    <option value="triangle">Triangle</option>
+                                    <option value="polygon">Polygon</option>
                                 </select>
                             </div>
                         </div>
@@ -27,7 +31,7 @@
                             <div class="form-group">
                                 <label><strong>Date</strong></label>
                                 <div>
-                                    <input type="date" class="form-control form-control-sm input-item" name="input[sales_date]" id="sales_date" required>
+                                    <input type="date" class="form-control input-item" name="input[sales_date]" id="sales_date" required>
                                 </div>
                             </div>
                         </div>
@@ -35,7 +39,7 @@
                             <div class="form-group">
                                 <label><strong>Remarks</strong></label>
                                 <div>
-                                    <textarea class="form-control form-control-sm input-item" name="input[remarks]" id="remarks" placeholder="Remarks" maxlength="255"></textarea>
+                                    <textarea class="form-control input-item" name="input[remarks]" id="remarks" placeholder="Remarks" maxlength="255"></textarea>
                                 </div>
                             </div>
                         </div>
