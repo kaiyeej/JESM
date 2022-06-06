@@ -9,13 +9,12 @@ include 'core/config.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Mazer Admin Dashboard</title>
     
+    <link rel="stylesheet" href="assets/css/pages/form-element-select.css">
     <link rel="stylesheet" href="assets/css/main/app.css">
     <link rel="stylesheet" href="assets/css/main/app-dark.css">
     <link rel="shortcut icon" href="assets/images/logo/favicon.svg" type="image/x-icon">
     <link rel="shortcut icon" href="assets/images/logo/favicon.png" type="image/png">
     
-    <link rel="stylesheet" href="vendors/select2/select2.min.css">
-    <link rel="stylesheet" href="vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
     <link rel="stylesheet" href="vendors/sweetalert/sweetalert.css">
 
     <link rel="stylesheet" href="assets/css/shared/iconly.css">
@@ -25,7 +24,6 @@ include 'core/config.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="vendors/datatables.net/jquery.dataTables.js"></script>
     <script src="vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
-    <script src="vendors/select2/select2.min.js"></script>
 </head>
 
 <body>
@@ -75,9 +73,11 @@ include 'core/config.php';
         <!-- END FOOTER -->
     </div>
 </div>
+<script src="assets/js/extensions/form-element-select.js"></script>
 <script src="assets/js/app.js"></script> 
 <script src="assets/js/extensions/datatables.js"></script>
 <script src="vendors/sweetalert/sweetalert.js"></script>
+<script src="vendors/select2/select2.min.js"></script>
 
 <script type='text/javascript'>
 <?php

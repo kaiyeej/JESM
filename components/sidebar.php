@@ -1,6 +1,6 @@
 <?php
 $request = $_SERVER['REQUEST_URI'];
-$page = str_replace("/chmsc/", "", $request);
+$page = str_replace("/jesm/", "", $request);
 ?>
 <div class="sidebar-menu">
     <ul class="menu">
@@ -33,7 +33,7 @@ $page = str_replace("/chmsc/", "", $request);
         </li>
 
         
-        <li class="sidebar-item  has-sub">
+        <li class="sidebar-item <?= $page == 'products' || $page == 'product-categories' ? 'active' : '' ?>  has-sub">
             <a href="#" class='sidebar-link'>
                 <i class="bi bi-bag-fill"></i>
                 <span>Product Entry</span>
@@ -51,7 +51,7 @@ $page = str_replace("/chmsc/", "", $request);
         
         <li class="sidebar-title">Transactions</li>
         
-        <li class="sidebar-item  ">
+        <li class="sidebar-item <?= $page == 'sales' ? 'active' : '' ?>">
             <a href="./sales" class='sidebar-link'>
                 <i class="bi bi-basket-fill"></i>
                 <span>Sales</span>

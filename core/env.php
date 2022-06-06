@@ -1,6 +1,6 @@
 <?php
 
-define('BASE_URL', 'http://localhost/chmsc/');
+define('BASE_URL', 'http://localhost/jesm/');
 define("BASE_PATH", __DIR__ . "/../");
 
 define("HOST", "localhost");

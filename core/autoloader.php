@@ -6,6 +6,7 @@ $classes = array(
     'Customers'         => $pre_class . 'customers.php',
     'Suppliers'         => $pre_class . 'suppliers.php',
     'Products'          => $pre_class . 'products.php',
-    'ProductCategories'   => $pre_class . 'productcategories.php',
+    'ProductCategories' => $pre_class . 'productcategories.php',
+    'Sales'             => $pre_class . 'sales.php',
 
 );
