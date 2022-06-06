@@ -19,12 +19,10 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label><strong>Customer</strong></label>
-                                <select class="choices form-select" name="input[customer_id]" id="customer_id" required>
-                                    <option value="romboid">Romboid</option>
-                                    <option value="trapeze">Trapeze</option>
-                                    <option value="triangle">Triangle</option>
-                                    <option value="polygon">Polygon</option>
-                                </select>
+                                <div>
+                                    <select class="form-control input-item select2" name="input[customer_id]" id="customer_id" required>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-6">

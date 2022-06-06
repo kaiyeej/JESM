@@ -10,8 +10,6 @@ include 'core/config.php';
     <title>Dashboard - Mazer Admin Dashboard</title>
     
     <link rel="stylesheet" href="assets/css/pages/form-element-select.css">
-    <link rel="stylesheet" href="vendors/select2/select2.min.css">
-    <link rel="stylesheet" href="vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/main/app.css">
     <link rel="stylesheet" href="assets/css/main/app-dark.css">
     <link rel="shortcut icon" href="assets/images/logo/favicon.svg" type="image/x-icon">
