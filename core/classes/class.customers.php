@@ -15,6 +15,9 @@ class Customers extends Connection
             'remarks'                   => $this->inputs['remarks'],
             'date_added'                => $this->getCurrentDate(),
         );
+
+        $this->insert_logs('Added New Customer (Name:'. $this->clean($this->inputs[$this->name]).')','');
+
         return $this->insertIfNotExist($this->table, $form);
     }
 
@@ -33,6 +36,8 @@ class Customers extends Connection
                 'remarks' => $this->inputs['remarks'],
                 'date_last_modified' => $this->getCurrentDate()
             );
+
+            $this->insert_logs('Updated Customer (Name:'. $this->clean($this->inputs[$this->name]).')','');
             return $this->update($this->table, $form, "$this->pk = '$primary_id'");
         }
     }
@@ -57,6 +62,7 @@ class Customers extends Connection
     public function remove()
     {
         $ids = implode(",", $this->inputs['ids']);
+        $this->insert_logs('Deleted Customer Entry');
         return $this->delete($this->table, "$this->pk IN($ids)");
     }
 

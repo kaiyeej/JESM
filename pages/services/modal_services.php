@@ -17,6 +17,14 @@
                     </div>
                     <div class="form-group row">
                         <div class="col">
+                            <label><strong>Service Fee</strong></label>
+                            <div>
+                            <input type="number" class="form-control input-item" name="input[service_fee]" id="service_fee" placeholder="Service fee amount" step="0.01" autocomplete="off" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
                             <label><strong>Remarks</strong></label>
                             <div>
                             <textarea type="text" class="form-control input-item" name="input[service_remarks]" id="service_remarks" placeholder="Remarks" autocomplete="off" maxlength="255" required></textarea>

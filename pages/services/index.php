@@ -42,6 +42,7 @@
                             <th><input type='checkbox' onchange="checkAll(this, 'dt_id')"></th>
                             <th></th>
                             <th>Service</th>
+                            <th>Fee</th>
                             <th>Remarks</th>
                             <th>Date Added</th>
                             <th>Date Modified</th>
@@ -77,6 +78,9 @@ function getEntries() {
                 },
                 {
                     "data": "service_name"
+                },
+                {
+                    "data": "service_amount"
                 },
                 {
                     "data": "service_remarks"

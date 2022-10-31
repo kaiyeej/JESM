@@ -9,17 +9,24 @@ class Services extends Connection
     {
         $form = array(
             $this->name         => $this->clean($this->inputs[$this->name]),
+            'service_fee'       => $this->inputs['service_fee'],
             'service_remarks'   => $this->inputs['service_remarks'],
             'date_added'        => $this->getCurrentDate(),
         );
+
+        $this->insert_logs('Added new Service (Name:'. $this->clean($this->inputs[$this->name]).')','');
         return $this->insertIfNotExist($this->table, $form);
     }
 
     public function edit()
     {
         $form = array(
-            $this->name => $this->clean($this->inputs[$this->name])
+            $this->name         => $this->clean($this->inputs[$this->name]),
+            'service_fee'       => $this->inputs['service_fee'],
+            'service_remarks'   => $this->inputs['service_remarks']
         );
+
+        $this->insert_logs('Updated Service (Name:'. $this->clean($this->inputs[$this->name]).')','');
         return $this->updateIfNotExist($this->table, $form);
     }
 
@@ -28,6 +35,7 @@ class Services extends Connection
         $rows = array();
         $result = $this->select($this->table);
         while ($row = $result->fetch_assoc()) {
+            $row['service_amount'] = number_format($row['service_fee'],2);
             $rows[] = $row;
         }
         return $rows;
@@ -44,6 +52,7 @@ class Services extends Connection
     public function remove()
     {
         $ids = implode(",", $this->inputs['ids']);
+        $this->insert_logs('Deleted Service');
         return $this->delete($this->table, "$this->pk IN($ids)");
     }
 
@@ -52,6 +61,13 @@ class Services extends Connection
         $result = $this->select($this->table, $this->name, "$this->pk = '$primary_id'");
         $row = $result->fetch_assoc();
         return $row[$this->name];
+    }
+
+    public function service_fee($primary_id)
+    {
+        $result = $this->select($this->table, 'service_fee', "$this->pk = '$primary_id'");
+        $row = $result->fetch_assoc();
+        return $row['service_fee'];
     }
 
     public function monthly_total($id)

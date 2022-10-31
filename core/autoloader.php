@@ -14,4 +14,8 @@ $classes = array(
     'InventoryReport'   => $pre_class . 'inventoryreport.php',
     'SalesReport'       => $pre_class . 'SalesReport.php',
     'JobOrder'          => $pre_class . 'joborder.php',
+    'Users'             => $pre_class . 'users.php',
+    'Logs'             => $pre_class . 'logs.php',
+    'UserPrivileges'   => $pre_class . 'userprivileges.php',
+    'Menus'            => $pre_class . 'menus.php',
 );

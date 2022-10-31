@@ -299,28 +299,43 @@
 
     function getProductPrice(){
         var id = $("#product_id").val();
-        $.ajax({
-            type: "POST",
-            url: "controllers/sql.php?c=Products&q=view",
-            data: {
-            input: {
-                id: id
-            }
-            },
-            success: function(data) {
-                var jsonParse = JSON.parse(data);
-                var json = jsonParse.data;
-                $("#price").val(json.product_price);
-            }
-        });
+        if(id == -1){
+            $("#div_qty").hide();
+            $("#qty").val(1);
+        }else{
+         
+            $("#div_qty").show();
+            $("#qty").val(0);
+            $.ajax({
+                type: "POST",
+                url: "controllers/sql.php?c=Products&q=view",
+                data: {
+                input: {
+                    id: id
+                }
+                },
+                success: function(data) {
+                    var jsonParse = JSON.parse(data);
+                    var json = jsonParse.data;
+                    $("#price").val(json.product_price);
+                }
+            });
+           
+        }
     }
 
+    function changeService() {
+        var optionSelected = $("#service_id").find('option:selected').attr('service_fee');
+        $("#service_fee").val(optionSelected);
+    }
 
     $(document).ready(function() {
-        schema();
         getEntries();
         getSelectOption('Customers', 'customer_id', 'customer_name');
-        getSelectOption('Services', 'service_id', 'service_name');
-        getSelectOption('Products', 'product_id', 'product_name');
+        getSelectOption('Services', 'service_id', 'service_name', "", ['service_fee']);
+        getSelectOption('Products', 'product_id', 'product_name', '', [], '', 'Please Select', '', 'Labor/Service');
     });
 </script>
+
+
+

@@ -25,16 +25,25 @@
                     </div>
                     <div class="form-group row">
                         <div class="col">
+                            <label><strong>Service</strong></label>
+                            <div>
+                                <select class="form-control input-item select2" onchange="changeService()" name="input[service_id]" id="service_id" required>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label><strong>Service Fee</strong></label>
+                            <div>
+                                <input type="number" step="0.01" class="form-control input-item"  name="input[service_fee]" id="service_fee" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col">
                             <label><strong>Date</strong></label>
                             <div>
                                 <input type="date" class="form-control input-item" name="input[jo_date]" id="jo_date" required>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <label><strong>Service</strong></label>
-                            <div>
-                                <select class="form-control input-item select2" name="input[service_id]" id="service_id" required>
-                                </select>
                             </div>
                         </div>
                     </div>
@@ -50,7 +59,7 @@
                 <div class="modal-footer">
                     <div class='btn-group'>
                         <button type="submit" class="btn btn-primary btn-sm" id="btn_submit">Submit</button>
-                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -67,6 +76,7 @@
                     <div class="col-sm-12">
                         <div><b>Customer:</b> <span id="customer_label" class="label-item"></span></div>
                         <div><b>Service:</b> <span id="service_label" class="label-item"></span></div>
+                        <div><b>Service Fee:</b> <span id="service_fee_label" class="label-item"></span></div>
                         <div><b>Date:</b> <span id="jo_date_label" class="label-item"></span></div>
                         <div><b>Reference:</b> <span id="reference_number_label" class="label-item"></span></div>
                     </div>
@@ -85,7 +95,7 @@
                                         <select class="form-control form-control-sm select2" name="input[product_id]" id="product_id" onchange="getProductPrice()" required></select>
                                     </div>
                                 </div><br>
-                                <div class="col">
+                                <div class="col" id="div_qty">
                                     <label><strong>Qty</strong></label>
                                     <div>
                                         <input type="number" class="form-control form-control-sm input-item" autocomplete="off" name="input[qty]" id="qty" required>

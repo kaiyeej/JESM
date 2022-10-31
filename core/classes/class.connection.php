@@ -14,6 +14,16 @@ class Connection
         $this->mysqli = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
     }
 
+    public function insert_logs($remarks)
+    {
+        $form = array(
+            'remarks'   => $remarks,
+            'user_id'   => $_SESSION['user']['id'],
+        );
+
+        $this->insert('tbl_logs', $form);
+    }
+
     public function insert($table, $para = array(), $last_id = 'N')
     {
         $table_columns = implode(',', array_keys($para));

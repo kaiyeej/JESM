@@ -13,6 +13,8 @@ class Products extends Connection
             'remarks'               => $this->inputs['remarks'],
             'date_added'            => $this->getCurrentDate(),
         );
+
+        $this->insert_logs('Added New Product (Name:'. $this->clean($this->inputs[$this->name]).')','');
         return $this->insertIfNotExist($this->table, $form);
     }
 
@@ -23,6 +25,7 @@ class Products extends Connection
             'product_price'         => $this->inputs['product_price'],
             'remarks'               => $this->inputs['remarks']
         );
+        $this->insert_logs('Updated Product (Name:'. $this->clean($this->inputs[$this->name]).')','');
         return $this->updateIfNotExist($this->table, $form);
     }
 
@@ -47,6 +50,7 @@ class Products extends Connection
     public function remove()
     {
         $ids = implode(",", $this->inputs['ids']);
+        $this->insert_logs('Deleted Product Entry');
         return $this->delete($this->table, "$this->pk IN($ids)");
     }
 
@@ -91,6 +95,8 @@ class Products extends Connection
         $form = array(
             'product_img' => $image_name,
         );
+
+        $this->insert_logs('Uploaded Product Image');
         return $this->update($this->table, $form, "product_id='$id'");
     }
 }

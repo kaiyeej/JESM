@@ -20,6 +20,8 @@ class Suppliers extends Connection
                 'remarks'           => $this->inputs['remarks'],
                 'date_added'        => $this->getCurrentDate(),
             );
+
+            $this->insert_logs('Added new Supplier (Name:'. $this->clean($this->inputs[$this->name]).')','');
             return $this->insert($this->table, $form);
         }
     }
@@ -38,6 +40,7 @@ class Suppliers extends Connection
                 'contact_number' => $this->inputs['contact_number'],
                 'remarks' => $this->inputs['remarks']
             );
+            $this->insert_logs('Updated Supplier (Name:'. $this->clean($this->inputs[$this->name]).')','');
             return $this->update($this->table, $form, "$this->pk = '$primary_id'");
         }
     }
@@ -46,6 +49,7 @@ class Suppliers extends Connection
     public function remove()
     {
         $ids = implode(",", $this->inputs['ids']);
+        $this->insert_logs('Deleted Supplier Entry');
         return $this->delete($this->table, "$this->pk IN($ids)");
     }
 

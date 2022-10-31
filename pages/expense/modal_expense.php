@@ -152,7 +152,7 @@
             <!--        <div class="modal-footer">
                 <div class='btn-group'>
                     <button type="button" class="btn btn-primary btn-sm" id="btn_finish">Finish</button>
-                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">Close</button>
                 </div>
             </div> -->
         </div>

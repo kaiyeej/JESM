@@ -18,6 +18,8 @@ class PurchaseOrder extends Connection
             'remarks'       => $this->inputs['remarks'],
             'date_added'    => $this->getCurrentDate(),
         );
+
+        $this->insert_logs('Added new Purchase Order (Ref #:'. $this->clean($this->inputs[$this->name]).')','');
         return $this->insertIfNotExist($this->table, $form, '', 'Y');
     }
 
@@ -43,6 +45,8 @@ class PurchaseOrder extends Connection
             'po_date'    => $this->inputs['po_date'],
             'remarks'       => $this->inputs['remarks']
         );
+
+        $this->insert_logs('Updated Purchase Order (Ref #:'. $this->clean($this->inputs[$this->name]).')','');
         return $this->updateIfNotExist($this->table, $form);
     }
 
@@ -105,6 +109,8 @@ class PurchaseOrder extends Connection
         $form = array(
             'status' => 'F',
         );
+
+        $this->insert_logs('Finished Purchase Order');
         return $this->update($this->table, $form, "$this->pk = '$primary_id'");
     }
 
@@ -116,6 +122,8 @@ class PurchaseOrder extends Connection
     public function remove()
     {
         $ids = implode(",", $this->inputs['ids']);
+        
+        $this->insert_logs('Deleted Purchase Order');
         return $this->delete($this->table, "$this->pk IN($ids)");
     }
 

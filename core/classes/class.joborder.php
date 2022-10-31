@@ -14,12 +14,14 @@ class JobOrder extends Connection
         $form = array(
             $this->name         => $this->clean($this->inputs[$this->name]),
             'customer_id'       => $this->inputs['customer_id'],
+            'service_fee'       => $this->inputs['service_fee'],
             'service_id'        => $this->inputs['service_id'],
             'remarks'           => $this->inputs['remarks'],
             'jo_date'           => $this->inputs['jo_date'],
             'date_added'        => $this->getCurrentDate(),
             
         );
+        $this->insert_logs('Added New Job-order (Ref #:'. $this->clean($this->inputs[$this->name]).')','');
         return $this->insertIfNotExist($this->table, $form, '', 'Y');
 
     }
@@ -38,7 +40,7 @@ class JobOrder extends Connection
             'price'         => $this->inputs['price'],
             'amount'         => ($this->inputs['price']*$this->inputs['qty'])
         );
-
+        
         return $this->insert($this->table_detail, $form);
     }
 
@@ -47,10 +49,13 @@ class JobOrder extends Connection
         $form = array(
             $this->name         => $this->clean($this->inputs[$this->name]),
             'customer_id'       => $this->inputs['customer_id'],
+            'service_fee'       => $this->inputs['service_fee'],
             'service_id'        => $this->inputs['service_id'],
             'remarks'           => $this->inputs['remarks'],
             'jo_date'           => $this->inputs['jo_date']
         );
+
+        $this->insert_logs('Updated Job-order (Ref #:'. $this->clean($this->inputs[$this->name]).')','');
         return $this->updateIfNotExist($this->table, $form);
     }
 
@@ -64,7 +69,7 @@ class JobOrder extends Connection
         while ($row = $result->fetch_assoc()) {
             $row['customer'] = $Customers->name($row['customer_id']);
             $row['service'] = $Services->name($row['service_id']);
-            $row['total'] = $this->total($row['jo_id']);
+            $row['total'] = number_format($this->total($row['jo_id']),2);
             $rows[] = $row;
         }
         return $rows;
@@ -74,8 +79,12 @@ class JobOrder extends Connection
     {
 
         $result = $this->select($this->table_detail, "sum(amount) as total", "$this->pk = '$primary_id'");
-        $row = $result->fetch_assoc();
-        return $row['total'];
+        $row = $result->fetch_array();
+
+        $result2 = $this->select($this->table, "service_fee", "$this->pk = '$primary_id'");
+        $service_fee = $result2->fetch_array();
+
+        return $row['total']+$service_fee[0];
     }
 
     public function view()
@@ -87,6 +96,7 @@ class JobOrder extends Connection
         $row = $result->fetch_assoc();
         $row['customer'] = $Customers->name($row['customer_id']);
         $row['service'] = $Services->name($row['service_id']);
+        $row['service_fee'] = number_format($row['service_fee'],2);
         return $row;
     }
 
@@ -98,7 +108,7 @@ class JobOrder extends Connection
         $count = 1;
         $result = $this->select($this->table_detail, '*', $param);
         while ($row = $result->fetch_assoc()) {
-            $row['product'] = $Products->name($row['product_id']);
+            $row['product'] = ($row['product_id'] == -1 ? "Labor/Service" : $Products->name($row['product_id']));
             $row['qty'] = number_format($row['qty']);
             $row['price'] = number_format($row['price']);
             $row['count'] = $count++;
@@ -136,6 +146,7 @@ class JobOrder extends Connection
     public function remove()
     {
         $ids = implode(",", $this->inputs['ids']);
+        $this->insert_logs('Deleted Job-order Entry');
         return $this->delete($this->table, "$this->pk IN($ids)");
     }
 
@@ -170,6 +181,8 @@ class JobOrder extends Connection
         $form = array(
             'status' => 'F',
         );
+
+        $this->insert_logs('Finished Job-order Entry');
         return $this->update($this->table, $form, "$this->pk = '$primary_id'");
     }
 

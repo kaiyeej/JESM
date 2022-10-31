@@ -9,6 +9,10 @@ $routes = array(
         'class_name' => 'Homepage',
         'has_detail' => 0
     ),
+    "users" => array(
+        'class_name' => 'Users',
+        'has_detail' => 0
+    ),
     "sales" => array(
         'class_name' => 'Sales',
         'has_detail' => 1
@@ -49,7 +53,15 @@ $routes = array(
         'class_name' => 'JobOrder',
         'has_detail' => 1
     ),
-
+    "inventory-report" => array(
+        'class_name' => 'InventoryReport',
+        'has_detail' => 1
+    ),
+    "logs" => array(
+        'class_name' => 'Logs',
+        'has_detail' => 1
+    ),
+    
 
 );
 /** END SET ROUTES */

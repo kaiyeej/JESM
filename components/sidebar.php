@@ -68,19 +68,26 @@ $page = str_replace("/jesm/", "", $request);
         <li class="sidebar-title">Reports</li>
         
         <li class="sidebar-item <?= $page == 'inventory-report' ? 'active' : '' ?>">
-            <a href="./inventory-report2" class='sidebar-link'>
+            <a href="./inventory-report" class='sidebar-link'>
                 <i class="bi bi-bar-chart-steps"></i>
                 <span>Inventory Report</span>
             </a>
         </li>
 
-        <li class="sidebar-item <?= $page == 'sales-order' ? 'active' : '' ?>">
-            <a href="./sales-report2" class='sidebar-link'>
-                <i class="bi bi-bar-chart-line-fill"></i>
-                <span>Sales Report</span>
+        <li class="sidebar-title">Security</li>
+        
+        <li class="sidebar-item <?= $page == 'users' ? 'active' : '' ?>">
+            <a href="./users" class='sidebar-link'>
+                <i class="bi bi-shield-fill-plus"></i>
+                <span>Users</span>
             </a>
         </li>
-
+        <li class="sidebar-item <?= $page == 'logs' ? 'active' : '' ?>">
+            <a href="./logs" class='sidebar-link'>
+                <i class="bi bi-person-lines-fill"></i>
+                <span>Audit Trails</span>
+            </a>
+        </li>
         
     </ul>
 </div>

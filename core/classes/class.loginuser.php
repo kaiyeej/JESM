@@ -20,7 +20,7 @@ class LoginUser extends Connection
             $_SESSION["user_fullname"] = $row['user_fullname'];
             $_SESSION["username"] = $row['username'];
             $_SESSION["user_category"] = $row['user_category'];
-
+            $_SESSION['user']['id'] = $row['user_id'];
             $res = 1;
         } else {
             $res = 0;

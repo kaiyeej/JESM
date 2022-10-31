@@ -139,7 +139,6 @@ if (!isset($_SESSION["status"])) {
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
-
                 </div>
               </div>
             </div>
@@ -689,7 +688,8 @@ if (!isset($_SESSION["status"])) {
     }
     // END MODULE
 
-    function getSelectOption(class_name, primary_id, label, param = '', attributes = [], pre_value = '', pre_label = 'Please Select', sub_option = '') {
+    function getSelectOption(class_name, primary_id, label, param = '', attributes = [], pre_value = '', pre_label = 'Please Select', sub_option = '',add_opt ="") {
+
       $.ajax({
         type: "POST",
         url: "controllers/sql.php?c=" + class_name + "&q=show",
@@ -700,8 +700,12 @@ if (!isset($_SESSION["status"])) {
         },
         success: function(data) {
           var json = JSON.parse(data);
-          $("#" + primary_id).html("<option value='" + pre_value + "'> &mdash; " + pre_label + " &mdash; </option>");
-
+          
+          if(add_opt != ""){
+            $("#" + primary_id).append("<option value='" + pre_value + "'> &mdash; " + pre_label + " &mdash; </option><option value='-1'>" + add_opt + "</option>");
+          }else{
+            $("#" + primary_id).html("<option value='" + pre_value + "'> &mdash; " + pre_label + " &mdash; </option>");
+          }
 
 
           for (list_index = 0; list_index < json.data.length; list_index++) {

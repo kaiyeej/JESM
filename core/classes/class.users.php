@@ -15,12 +15,14 @@ class Users extends Connection
         } else {
             $pass = $this->inputs['password'];
             $form = array(
-                'user_fullname'     => $this->inputs['user_fullname'],
-                'user_category'     => $this->inputs['user_category'],
-                'username'          => $this->inputs['username'],
-                'password'          => md5('$pass'),
-                'date_added'        => $this->getCurrentDate(),
+                'user_fullname' => $this->inputs['user_fullname'],
+                'user_category' => $this->inputs['user_category'],
+                'date_added' => $this->getCurrentDate(),
+                'username' => $this->inputs['username'],
+                'password' => md5('$pass')
             );
+
+            $this->insert_logs('Added new User (Name:'. $this->clean($this->inputs[$this->name]).')','');
             return $this->insert($this->table, $form);
         }
     }
@@ -39,6 +41,7 @@ class Users extends Connection
                 'user_category' => $this->inputs['user_category'],
                 'username' => $username
             );
+            $this->insert_logs('Updated User Entry(Name:'. $this->clean($this->inputs[$this->name]).')','');
             return $this->update($this->table, $form, "$this->pk = '$primary_id'");
         }
     }
@@ -47,6 +50,7 @@ class Users extends Connection
     public function remove()
     {
         $ids = implode(",", $this->inputs['ids']);
+        $this->insert_logs('Deleted User Entry');
         return $this->delete($this->table, "$this->pk IN($ids)");
     }
 
@@ -55,7 +59,7 @@ class Users extends Connection
         $rows = array();
         $result = $this->select($this->table);
         while ($row = $result->fetch_assoc()) {
-            $row['category'] = ($row['user_category'] == "A" ? "Admin" : "Cashier");
+            $row['category'] = ($row['user_category'] == "A" ? "Admin" : "Staff" );
             $rows[] = $row;
         }
         return $rows;
@@ -74,5 +78,20 @@ class Users extends Connection
         $result = $self->select($self->table, $self->name, "$self->pk  = '$primary_id'");
         $row = $result->fetch_assoc();
         return $row[$self->name];
+    }
+
+    public function dataRow($primary_id, $field)
+    {
+        $result = $this->select($this->table, $field, "$this->pk = '$primary_id'");
+        $row = $result->fetch_array();
+        return $row[$field];
+    }
+
+    public static function fullname($primary_id)
+    {
+        $self = new self;
+        $result = $self->select($self->table, 'user_fullname', "$self->pk  = '$primary_id'");
+        $row = $result->fetch_assoc();
+        return $row['user_fullname'];
     }
 }

@@ -8,16 +8,14 @@ class InventoryReport extends Connection
 
     public function generate_report()
     {
-        $start_date = $_REQUEST['start_date'];
-        $end_date = $_REQUEST['end_date'];
+        $inv_date = $_REQUEST['inv_date'];
 
-        $result = $this->select("tbl_products");
+        $result = $this->select($this->table);
         $rows = array();
         while ($row = $result->fetch_assoc()) {
             $row['product_name'] = $row['product_name'];
             $row['cost'] = $row['product_cost'];
-            $row['price'] =  $row['product_price'];
-            $row['qty'] = $this->invQty($row['product_id'], $start_date, $end_date);
+            $row['qty'] = $this->invQty($row['product_id'], $inv_date);
             $rows[] = $row;
         }
         return $rows;
@@ -70,6 +68,7 @@ class InventoryReport extends Connection
     }
 
     public function currentQty($product_id){
+
         //in
         $fetch_po = $this->select("tbl_purchase_order po, tbl_purchase_order_details pod", "SUM(pod.qty)", "pod.product_id='$product_id' AND po.`status`='F' AND po.po_id=pod.po_id");
         $po_qty = $fetch_po->fetch_array();
@@ -85,16 +84,15 @@ class InventoryReport extends Connection
         return $in_qty-$out_qty;
     }
 
-    public function invQty($product_id, $start_date, $end_date){
+    public function invQty($product_id, $inv_date){
         //in
-        $fetch_po = $this->select("tbl_purchase_order po, tbl_purchase_order_details pod", "SUM(pod.qty)", "pod.product_id='$product_id' AND po.`status`='F' AND po.po_id=pod.po_id AND po.po_date BETWEEN '$start_date' AND '$end_date'");
+        $fetch_po = $this->select("tbl_purchase_order po, tbl_purchase_order_details pod", "SUM(pod.qty)", "pod.product_id='$product_id' AND po.`status`='F' AND po.po_id=pod.po_id AND po.po_date <= '$inv_date'");
         $po_qty = $fetch_po->fetch_array();
 
         $in_qty = $po_qty[0];
 
         //out
-
-        $fetch_jo_out = $this->select("tbl_job_order jo, tbl_job_order_details as jd", "SUM(jd.qty)", "jd.product_id='$product_id' AND jo.status='F' AND jo.jo_id=jd.jo_id AND jo.jo_date BETWEEN '$start_date' AND '$end_date'");
+        $fetch_jo_out = $this->select("tbl_job_order jo, tbl_job_order_details as jd", "SUM(jd.qty)", "jd.product_id='$product_id' AND jo.status='F' AND jo.jo_id=jd.jo_id AND jo.jo_date <= '$inv_date'");
         $jo_out_qty = $fetch_jo_out->fetch_array();
         
         $out_qty = $jo_out_qty[0];
