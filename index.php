@@ -1,99 +1,234 @@
 <?php
 include 'core/config.php';
+// print_r($_SESSION);
+
+if (!isset($_SESSION["status"])) {
+  header("location:./login/index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Mazer Admin Dashboard</title>
-    
-    <link rel="stylesheet" href="assets/css/pages/form-element-select.css">
-    <link rel="stylesheet" href="assets/css/main/app.css">
-    <link rel="stylesheet" href="assets/css/main/app-dark.css">
-    <link rel="shortcut icon" href="assets/images/logo/favicon.svg" type="image/x-icon">
-    <link rel="shortcut icon" href="assets/images/logo/favicon.png" type="image/png">
-    
-    <link rel="stylesheet" href="vendors/sweetalert/sweetalert.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JESM</title>
 
-    <link rel="stylesheet" href="assets/css/shared/iconly.css">
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <link rel="stylesheet" href="assets/css/pages/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/pages/datatables.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="vendors/datatables.net/jquery.dataTables.js"></script>
-    <script src="vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+  <!-- <link rel="stylesheet" href="assets/css/pages/form-element-select.css"> -->
+  <link rel="stylesheet" href="assets/css/main/app.css">
+  <link rel="stylesheet" href="assets/css/main/app-dark.css">
+  <link rel="shortcut icon" href="assets/images/logo.png" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/images/logo.png" type="image/png">
+
+  <link rel="stylesheet" href="vendors/sweetalert/sweetalert.css">
+
+  <link rel="stylesheet" href="assets/css/shared/iconly.css">
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <link rel="stylesheet" href="assets/css/pages/fontawesome.css">
+  <link rel="stylesheet" href="assets/css/pages/datatables.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="vendors/datatables.net/jquery.dataTables.js"></script>
+  <script src="vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+  <link rel="stylesheet" href="vendors/select2/select2.min.css">
+
+  <style>
+    body.theme-dark .form-check-input:checked {
+      background-color: #435ebe !important;
+      border-color: #435ebe !important;
+    }
+
+    body.theme-dark .btn-primary {
+      background-color: #435ebe !important;
+      border-color: #435ebe !important;
+    }
+
+    .btn-primary {
+      background-color: #435ebe !important;
+      border-color: #435ebe !important;
+    }
+
+    .btn-check:focus+.btn-primary,
+    .btn-primary:focus,
+    .btn-primary:hover {
+      background-color: #efa753 !important;
+      ;
+      border-color: #efa753 !important;
+      ;
+    }
+
+    .btn-primary:focus {
+      box-shadow: 0 0 0 0.25rem rgb(255 197 130) !important;
+    }
+
+    body.theme-dark .dropdown-menu {
+      background-color: #161b22 !important;
+    }
+
+    /* .dropdown-menu {
+      background-color: #bdbdbd !important;
+
+    } */
+
+    .form-check-input:focus {
+      border-color: #efa753;
+
+    }
+
+    .page-item.active .page-link {
+      background-color: #435ebe !important;
+      border-color: #435ebe !important;
+    }
+
+    body.theme-dark ol,
+    body.theme-dark ul {
+      padding-left: 0rem !important;
+    }
+
+    body.theme-dark .select2-container--default .select2-search--dropdown .select2-search__field {
+      border: 1px solid #35354f !important;
+    }
+
+    body.theme-dark .select2-container--default .select2-selection--single {
+      background-color: #1b1b29 !important;
+      border: 1px solid #35354f !important;
+
+    }
+
+    body.theme-dark .select2-dropdown {
+      background-color: #40404d !important;
+    }
+
+    body.theme-dark .select2-container--default .select2-results__option[aria-selected=true] {
+      background-color: #939393 !important;
+      color: #fff !important;
+    }
+  </style>
 </head>
 
 <body>
-<div id="app">
+
+  <div id="app">
     <div id="sidebar" class="active">
-        <div class="sidebar-wrapper active">
-            <div class="sidebar-header position-relative">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="logo">
-                        <a href="index.html"><img src="assets/images/logo/logo.svg" alt="Logo" srcset=""></a>
-                    </div>
-                    <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2" opacity=".3"></path><g transform="translate(-210 -1)"><path d="M220.5 2.5v2m6.5.5l-1.5 1.5"></path><circle cx="220.5" cy="11.5" r="4"></circle><path d="m214 5l1.5 1.5m5 14v-2m6.5-.5l-1.5-1.5M214 18l1.5-1.5m-4-5h2m14 0h2"></path></g></g></svg>
-                        <div class="form-check form-switch fs-6">
-                            <input class="form-check-input  me-0" type="checkbox" id="toggle-dark" >
-                            <label class="form-check-label" ></label>
-                        </div>
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--mdi" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3l3.19.09m3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95l2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31Z"></path></svg>
-                    </div>
-                    <div class="sidebar-toggler  x">
-                        <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
-                    </div>
-                </div>
+      <div class="sidebar-wrapper active">
+        <div class="sidebar-header position-relative">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="logo">
+              <a href="./"><img src="assets/images/logo.png" style="height: 67px;" alt="Logo" srcset=""></a>
             </div>
-            
-            <!-- SIDEBAR START -->
+            <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
+                <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2" opacity=".3"></path>
+                  <g transform="translate(-210 -1)">
+                    <path d="M220.5 2.5v2m6.5.5l-1.5 1.5"></path>
+                    <circle cx="220.5" cy="11.5" r="4"></circle>
+                    <path d="m214 5l1.5 1.5m5 14v-2m6.5-.5l-1.5-1.5M214 18l1.5-1.5m-4-5h2m14 0h2"></path>
+                  </g>
+                </g>
+              </svg>
+              <div class="form-check form-switch fs-6">
+                <input class="form-check-input  me-0" type="checkbox" id="toggle-dark">
+                <label class="form-check-label"></label>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--mdi" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                <path fill="currentColor" d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3l3.19.09m3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95l2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31Z"></path>
+              </svg>
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="fa fa-power-off"></span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
 
-            <?php require 'components/sidebar.php'; ?>
-
-            <!-- SIDEBAR END -->
-        
+                </div>
+              </div>
+            </div>
+            <div class="sidebar-toggler  x">
+              <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+            </div>
+          </div>
         </div>
+
+        <!-- SIDEBAR START -->
+
+        <?php require 'components/sidebar.php'; ?>
+
+        <!-- SIDEBAR END -->
+
+      </div>
     </div>
     <div id="main">
-        <header class="mb-3">
-            <a href="#" class="burger-btn d-block d-xl-none">
-                <i class="bi bi-justify fs-3"></i>
-            </a>
-        </header>
+      <header class="mb-3">
+        <a href="#" class="burger-btn d-block d-xl-none">
+          <i class="bi bi-justify fs-3"></i>
+        </a>
+      </header>
 
-    <!-- PAGE START -->
-    <?php require 'routes/routes.php'; ?>
-    <!-- PAGE END -->
+      <!-- PAGE START -->
+      <?php require 'routes/routes.php'; ?>
+      <!-- PAGE END -->
 
-        <!-- START FOOTER -->
-        <?php require 'components/footer.php'; ?>
-        <!-- END FOOTER -->
+      <!-- START FOOTER -->
+      <?php require 'components/footer.php'; ?>
+      <!-- END FOOTER -->
     </div>
-</div>
-<script src="assets/js/extensions/form-element-select.js"></script>
-<script src="assets/js/app.js"></script> 
-<script src="assets/js/extensions/datatables.js"></script>
-<script src="vendors/sweetalert/sweetalert.js"></script>
-<script src="vendors/select2/select2.min.js"></script>
+  </div>
+  <!-- <script src="assets/js/extensions/form-element-select.js"></script> -->
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/extensions/datatables.js"></script>
+  <script src="vendors/sweetalert/sweetalert.js"></script>
+  <script src="vendors/select2/select2.min.js"></script>
 
-<script type='text/javascript'>
-<?php
+
+
+  <script type='text/javascript'>
+    <?php
     echo "var route_settings = " . $route_settings . ";\n";
-?>
-</script>
-<script type="text/javascript">
+    ?>
+  </script>
+  <script type="text/javascript">
     var modal_detail_status = 0;
     $(document).ready(function() {
+
+      // FilePond.registerPlugin(
+      //   FilePondPluginImagePreview,
+      //   FilePondPluginImageExifOrientation,
+      //   FilePondPluginFileValidateSize,
+      //   FilePondPluginImageEdit,
+      //   FilePondPluginFileValidateType
+      // );
+      // FilePond.create(
+      //   document.querySelector('#imagesFilepond'), {
+      //     name: 'filepond',
+      //     maxFiles: 5,
+      //     allowBrowse: true,
+      //     acceptedFileTypes: ['image/*'],
+      //     // server
+
+
+      //   }
+      // );
       $(".select2").select2();
 
       $(".select2").css({
         "width": "100%"
       });
 
+
     });
+
+    function printCanvas() {
+      var printContents = document.getElementById('print_canvas').innerHTML;
+      var originalContents = document.body.innerHTML;
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+      window.close();
+      location.reload();
+
+    }
+
+
 
     function schema() {
       $.ajax({
@@ -151,7 +286,64 @@ include 'core/config.php';
     }
 
 
+
+    function logout() {
+      var url = "controllers/sql.php?c=LoginUser&q=logout";
+      $.ajax({
+        url: url,
+        success: function(data) {
+
+          location.reload();
+
+        }
+      });
+    }
+
+    function uploadProductImage(id) {
+      // alert(id);
+      $("#product_id_hidden").val(id);
+      $("#modalUpload").modal('show');
+
+    }
+    $("#frm_upload_img_product").submit(function(e) {
+      e.preventDefault();
+
+      //var formData = new FormData(this);
+      $("#btn_submit").prop('disabled', true);
+      $("#btn_submit").html("<span class='fa fa-spinner fa-spin'></span> Submitting ...");
+      // console.log(formData);
+
+      var url = "controllers/sql.php?c=" + route_settings.class_name + "&q=uploadImage";
+      $.ajax({
+        url: url,
+        type: "POST",
+        data: new FormData(this),
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function(data) {
+
+          var json = JSON.parse(data);
+          if (json.data == 1) {
+            $("#modalUpload").modal('hide');
+            success_update();
+            setTimeout(function() {
+              location.reload();
+            }, 2000);
+
+          }
+
+
+
+        }
+      });
+
+    });
+
     function addModal() {
+      $(".select2").select2({
+        dropdownParent: $("#modalEntry")
+      });
       modal_detail_status = 0;
       $("#hidden_id").val(0);
       document.getElementById("frm_submit").reset();
@@ -300,6 +492,7 @@ include 'core/config.php';
     // MODULE WITH DETAILS LIKE SALES
 
     function getEntryDetails2(id) {
+
       $("#hidden_id_2").val(id);
       modal_detail_status = 1;
       $.ajax({
@@ -311,6 +504,7 @@ include 'core/config.php';
           }
         },
         success: function(data) {
+
           var jsonParse = JSON.parse(data);
           const json = jsonParse.data;
 
@@ -351,8 +545,13 @@ include 'core/config.php';
             (typeof(col_list) != 'undefined' && col_list != null) ? col_list.classList.remove('col-12'): '';
             (typeof(col_list) != 'undefined' && col_list != null) ? col_list.classList.add('col-8'): '';
           }
+
           getEntries2();
           $("#modalEntry2").modal('show');
+          // $(".select2").select2().trigger('change');
+          $(".select2").select2({
+            dropdownParent: $("#modalEntry2")
+          });
         }
       });
     }
@@ -490,7 +689,7 @@ include 'core/config.php';
     }
     // END MODULE
 
-    function getSelectOption(class_name, primary_id, label, param = '', attributes = [], pre_value='', pre_label = 'Please Select',sub_option='') {
+    function getSelectOption(class_name, primary_id, label, param = '', attributes = [], pre_value = '', pre_label = 'Please Select', sub_option = '') {
       $.ajax({
         type: "POST",
         url: "controllers/sql.php?c=" + class_name + "&q=show",
@@ -503,14 +702,14 @@ include 'core/config.php';
           var json = JSON.parse(data);
           $("#" + primary_id).html("<option value='" + pre_value + "'> &mdash; " + pre_label + " &mdash; </option>");
 
-          
+
 
           for (list_index = 0; list_index < json.data.length; list_index++) {
             const list = json.data[list_index];
             var data_attributes = {};
-            if(sub_option == 1){
+            if (sub_option == 1) {
               data_attributes['value'] = list[primary_id.slice(0, -2)];
-            }else{
+            } else {
               data_attributes['value'] = list[primary_id];
             }
             for (var attr_index in attributes) {
@@ -534,7 +733,6 @@ include 'core/config.php';
         }
       });
     }
-
   </script>
 </body>
 

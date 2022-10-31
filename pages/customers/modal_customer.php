@@ -12,7 +12,7 @@
                             <label><strong>Name</strong></label>
                             <div>
                             <input type="text" class="form-control input-item" name="input[customer_name]" id="customer_name" autocomplete="off" placeholder="Customer Name" maxlength="100" required>
-                            </div>
+                        </div>
                         </div>
                     </div>
                     <div class="form-group row">

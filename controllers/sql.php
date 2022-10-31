@@ -13,6 +13,8 @@ if (isset($_POST['input'])) {
     $inputs = "";
 }
 
+
+
 $query = $_GET['q'];
 $class = $_GET['c'];
 

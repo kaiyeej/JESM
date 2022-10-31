@@ -6,7 +6,7 @@ $request = $_SERVER['REQUEST_URI'];
 // insert routes alphabetically
 $routes = array(
     "homepage" => array(
-        'class_name' => '',
+        'class_name' => 'Homepage',
         'has_detail' => 0
     ),
     "sales" => array(
@@ -21,15 +21,36 @@ $routes = array(
         'class_name' => 'Suppliers',
         'has_detail' => 0
     ),
+    "expense-category" => array(
+        'class_name' => 'ExpenseCategories',
+        'has_detail' => 0
+    ),
     "products" => array(
         'class_name' => 'Products',
         'has_detail' => 0
     ),
-    "product-categories" => array(
-        'class_name' => 'ProductCategories',
+    "services" => array(
+        'class_name' => 'Services',
         'has_detail' => 0
     ),
-    
+    "purchase-order" => array(
+        'class_name' => 'PurchaseOrder',
+        'has_detail' => 1
+    ),
+    "inventory-report" => array(
+        'class_name' => 'InventoryReport',
+        'has_detail' => 0
+    ),
+    "sales-report" => array(
+        'class_name' => 'SalesReport',
+        'has_detail' => 0
+    ),
+    "job-order" => array(
+        'class_name' => 'JobOrder',
+        'has_detail' => 1
+    ),
+
+
 );
 /** END SET ROUTES */
 

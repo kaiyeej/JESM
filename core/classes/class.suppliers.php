@@ -14,10 +14,11 @@ class Suppliers extends Connection
             return 2;
         } else {
             $form = array(
-                'supplier_name' => $this->inputs['supplier_name'],
-                'supplier_address' => $this->inputs['supplier_address'],
-                'contact_number' => $this->inputs['contact_number'],
-                'remarks' => $this->inputs['remarks']
+                'supplier_name'     => $this->inputs['supplier_name'],
+                'supplier_address'  => $this->inputs['supplier_address'],
+                'contact_number'    => $this->inputs['contact_number'],
+                'remarks'           => $this->inputs['remarks'],
+                'date_added'        => $this->getCurrentDate(),
             );
             return $this->insert($this->table, $form);
         }

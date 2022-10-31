@@ -15,10 +15,11 @@ class Users extends Connection
         } else {
             $pass = $this->inputs['password'];
             $form = array(
-                'user_fullname' => $this->inputs['user_fullname'],
-                'user_category' => $this->inputs['user_category'],
-                'username' => $this->inputs['username'],
-                'password' => md5('$pass')
+                'user_fullname'     => $this->inputs['user_fullname'],
+                'user_category'     => $this->inputs['user_category'],
+                'username'          => $this->inputs['username'],
+                'password'          => md5('$pass'),
+                'date_added'        => $this->getCurrentDate(),
             );
             return $this->insert($this->table, $form);
         }

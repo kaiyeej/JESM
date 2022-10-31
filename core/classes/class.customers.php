@@ -9,10 +9,11 @@ class Customers extends Connection
     public function add()
     {
         $form = array(
-            $this->name => $this->clean($this->inputs[$this->name]),
-            'customer_address' => $this->inputs['customer_address'],
-            'customer_contact_number' => $this->inputs['customer_contact_number'],
-            'remarks' => $this->inputs['remarks']
+            $this->name                 => $this->clean($this->inputs[$this->name]),
+            'customer_address'          => $this->inputs['customer_address'],
+            'customer_contact_number'   => $this->inputs['customer_contact_number'],
+            'remarks'                   => $this->inputs['remarks'],
+            'date_added'                => $this->getCurrentDate(),
         );
         return $this->insertIfNotExist($this->table, $form);
     }

@@ -41,10 +41,8 @@
                         <tr>
                             <th><input type='checkbox' onchange="checkAll(this, 'dt_id')"></th>
                             <th></th>
-                            <th></th>
                             <th>Product</th>
                             <th>Price</th>
-                            <th>Category</th>
                             <th>Date Added</th>
                             <th>Date Modified</th>
                         </tr>
@@ -74,12 +72,7 @@
                 },
                 {
                     "mRender": function(data, type, row) {
-                        return "<center><button class='btn btn-info btn-circle btn-sm' onclick='getEntryDetails(" + row.product_id + ")'><span class='ti ti-pencil'></span></button></center>";
-                    }
-                },
-                {
-                    "mRender": function(data, type, row) {
-                        return "<img src='images/products/" + row.product_img + "' style='width:50px;'>";
+                        return "<center><button class='btn btn-primary btn-circle btn-sm' onclick='getEntryDetails(" + row.product_id + ")'><span class='bi bi-pencil-square'></span></button></center>";
                     }
                 },
                 {
@@ -87,9 +80,6 @@
                 },
                 {
                     "data": "product_price"
-                },
-                {
-                    "data": "product_category"
                 },
                 {
                     "data": "date_added"
