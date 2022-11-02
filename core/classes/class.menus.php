@@ -9,7 +9,6 @@ class Menus extends Connection
                 array('url' => 'suppliers', 'name' => 'Suppliers', 'class_name' => 'Suppliers', 'has_detail' => 0),
                 array('url' => 'products', 'name' => 'Products', 'class_name' => 'Products', 'has_detail' => 0),
                 array('url' => 'services', 'name' => 'Services', 'class_name' => 'Services', 'has_detail' => 0),
-                
             ),
             'transaction' => array(
                 array('url' => 'purchase-order', 'name' => 'Purchase Order', 'class_name' => 'PurchaseOrder', 'has_detail' => 1),
@@ -19,11 +18,10 @@ class Menus extends Connection
 
                 array('url' => 'inventory-report', 'name' => 'Inventory Report', 'class_name' => 'InventoryReport', 'has_detail' => 0),
                 array('url' => 'sales-report', 'name' => 'Sales Report', 'class_name' => 'SalesReport', 'has_detail' => 0),
+                array('url' => 'logs', 'name' => 'Audit Trails', 'class_name' => 'Logs', 'has_detail' => 0),
             ),
             'admin' => array(
                 array('url' => 'users', 'name' => 'User Account', 'class_name' => 'Users', 'has_detail' => 0),
-                array('url' => 'logs', 'name' => 'Audit Trails', 'class_name' => 'Logs', 'has_detail' => 0),
-                array('url' => 'profile', 'name' => 'Profile', 'class_name' => 'Profile', 'has_detail' => 0),
             ),
         );
 
@@ -60,7 +58,7 @@ class Menus extends Connection
                         'has_detail' => $list_data['has_detail']
                     ];
                 } else {
-                    $this->dir = 'pages/restricted/index.php';
+                    $this->dir = 'error-403.html';
                     $this->route_settings = [];
                 }
             } else {
@@ -72,9 +70,16 @@ class Menus extends Connection
 
     public function sidebar($name, $url, $ti)
     {
+        $request = $_SERVER['REQUEST_URI'];
+        $page = str_replace("/jesm/", "", $request);
         $UserPrivileges = new UserPrivileges();
         if ($UserPrivileges->check($url, $_SESSION['user']['id']) == 1) {
-            echo '<li class="sidebar-item">
+            if($page == $url){
+                $active = "active";
+            }else{
+                $active = "";
+            }
+            echo '<li class="sidebar-item '.$active.'">
                 <a href="' . $url . '" class="sidebar-link">
                     <i class="' . $ti . '"></i>
                     <span>' . $name . '</span>

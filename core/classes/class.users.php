@@ -19,7 +19,7 @@ class Users extends Connection
                 'user_category' => $this->inputs['user_category'],
                 'date_added' => $this->getCurrentDate(),
                 'username' => $this->inputs['username'],
-                'password' => md5('$pass')
+                'password' => md5($pass)
             );
 
             $this->insert_logs('Added new User (Name:'. $this->clean($this->inputs[$this->name]).')','');

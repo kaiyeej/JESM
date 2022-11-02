@@ -70,7 +70,7 @@ class UserPrivileges extends Connection
         if ($user_category == 'A') {
             return 1;
         } else {
-            if ($url == 'homepage') {
+            if ($url == 'homepage' OR $url == 'profile') {
                 return 1;
             } else {
                 $result = $this->select($this->table, 'status', "url = '$url' AND user_id = '$user_id'");

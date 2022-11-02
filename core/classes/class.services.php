@@ -57,7 +57,7 @@ class Services extends Connection
         while($row = $result->fetch_array()){
             $reference .= $row[0].", ";
         }
-        $this->insert_logs('Deleted Service (Service: '.substr($reference, 0, -2).')');
+        $this->insert_logs('Deleted Service (Name: '.substr($reference, 0, -2).')');
         return $this->delete($this->table, "$this->pk IN($ids)");
     }
 

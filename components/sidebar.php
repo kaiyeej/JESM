@@ -32,12 +32,12 @@ $page = str_replace("/jesm/", "", $request);
             // REPORTS
             $Menus->sidebar('Inventory Report', 'inventory-report', 'bi bi-list-columns-reverse');
             $Menus->sidebar('Sales Report', 'sales-report', 'bi bi-graph-up');
+            $Menus->sidebar('Audit Trails', 'logs', 'bi bi-person-lines-fill');
         ?>
         <li class="sidebar-title">Security</li>
         <?php
             // ADMIN
             $Menus->sidebar('User Accounts', 'users', 'bi bi-shield-fill-plus');
-            $Menus->sidebar('Audit Trails', 'logs', 'bi bi-person-lines-fill');
         ?>
     </ul>
 </div>
