@@ -60,10 +60,14 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class='btn-group'>
-                        <button type="submit" class="btn btn-primary btn-sm" id="btn_submit_priv">Submit</button>
-                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-                    </div>
+                    <button type="button" class="btn" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Close</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary ml-1">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Submit</span>
+                    </button>
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@
 include 'core/config.php';
 // print_r($_SESSION);
 
-if (!isset($_SESSION["status"])) {
+if (!isset($_SESSION['user']['id'])) {
   header("location:./login/index.php");
 }
 ?>

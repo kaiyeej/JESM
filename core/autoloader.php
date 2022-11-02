@@ -18,4 +18,5 @@ $classes = array(
     'Logs'             => $pre_class . 'logs.php',
     'UserPrivileges'   => $pre_class . 'userprivileges.php',
     'Menus'            => $pre_class . 'menus.php',
+    'Profile'          => $pre_class . 'profile.php',
 );

@@ -37,49 +37,51 @@
     </div>
     <section class="section">
         <div class="card">
-            <div class="card-header">
-                <div class="btn-group divider divider-right">
-                    <div style="float: right">
-                        <a href="#" class="btn btn-primary btn-sm btn-icon-split" onclick="addModal()">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-plus"></i>
-                            </span>
-                            <span class="text">Add Entry</span>
-                        </a>
-                        <a href="#" class="btn btn-danger btn-sm btn-icon-split" onclick='deleteEntry()' id='btn_delete'>
-                            <span class="icon text-white-50">
-                                <i class="fas fa-trash"></i>
-                            </span>
-                            <span class="text">Delete Entry</span>
-                        </a>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-2">
+                            <div class="list-group">
+                                <a href="#" style="background:#3f51b5;text-align:center;color:#9fa8da;" class="list-group-item list-group-item-action" onclick="addModal()">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                    <span class="text">Add</span>
+                                </a>
+                                <a href="#" style="background:#dc3545;text-align:center;color:#9fa8da;" class="list-group-item list-group-item-action" onclick='deleteEntry()' id='btn_delete'>
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                    <span class="text">Delete</span>
+                                </a>
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="col-sm-10 table-responsive">
+                        <table class="table mb-0" id="dt_entries">
+                            <thead>
+                                <tr>
+                                    <th><input type='checkbox' onchange="checkAll(this, 'dt_id')"></th>
+                                    <th></th>
+                                    <th>Date</th>
+                                    <th>Reference</th>
+                                    <th>Customer</th>
+                                    <th>Service</th>
+                                    <th>Status</th>
+                                    <th>Total</th>
+                                    <th>Date Added</th>
+                                    <th>Date Modified</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                    <th colspan="7" style="text-align:right">Total:</th>
+                                    <th colspan="3"></th>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
-            </div>
-
-            <div class="card-body">
-                <table class="display expandable-table" id="dt_entries" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th><input type='checkbox' onchange="checkAll(this, 'dt_id')"></th>
-                                <th></th>
-                                <th>Date</th>
-                                <th>Reference</th>
-                                <th>Customer</th>
-                                <th>Service</th>
-                                <th>Status</th>
-                                <th>Total</th>
-                                <th>Date Added</th>
-                                <th>Date Modified</th>
-                            </tr>
-                        </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                            <th colspan="7" style="text-align:right">Total:</th>
-                            <th colspan="3"></th>
-                        </tr>
-                    </tfoot>
-                </table>
             </div>
         </div>
     </section>
@@ -91,6 +93,7 @@
         $("#dt_entries").DataTable().destroy();
         $("#dt_entries").DataTable({
             "processing": true,
+            "order": [[ 3, 'desc' ]],
             "footerCallback": function(row, data, start, end, display) {
 				var api = this.api(),
 					data;

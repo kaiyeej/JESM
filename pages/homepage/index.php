@@ -93,7 +93,19 @@ $Main = new Connection();
         </div>
     </div>
     <div class="col-12 col-lg-3">
-      
+        <div class="card" id="profile_card" onclick="profile()">
+            <div class="card-body" style="padding-bottom: 12px;">
+                <div class="d-flex align-items-center">
+                    <div class="ms-3 name">
+                        <i style="font-size:50px;" class="bi bi-person"></i>
+                    </div>
+                    <div class="ms-3 name">
+                        <h5 class="font-bold"><?= $_SESSION['user_fullname'] ?></h5>
+                        <h6 class="text-muted mb-0"><?= $_SESSION['user_category'] == "A" ? "Admin" : "Staff" ?></h6>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="card">
             <div class="card-header">
                 <h4><?= date("F",strtotime($Main->getCurrentDate())); ?> Top Service</h4>
@@ -103,6 +115,7 @@ $Main = new Connection();
             </div>
         </div>
     </div>
+    
 </section>
 </div>
 
@@ -110,6 +123,9 @@ $Main = new Connection();
 salesGraph();
 graphByExpense();
 
+function profile() {
+    window.location = "./profile";
+}
 
 function graphByExpense(){
     $.getJSON("controllers/sql.php?c=Homepage&q=service_graph", function (data) {

@@ -13,14 +13,17 @@ class Menus extends Connection
             ),
             'transaction' => array(
                 array('url' => 'purchase-order', 'name' => 'Purchase Order', 'class_name' => 'PurchaseOrder', 'has_detail' => 1),
+                array('url' => 'job-order', 'name' => 'Job Order', 'class_name' => 'JobOrder', 'has_detail' => 1),
             ),
             'report' => array(
 
                 array('url' => 'inventory-report', 'name' => 'Inventory Report', 'class_name' => 'InventoryReport', 'has_detail' => 0),
+                array('url' => 'sales-report', 'name' => 'Sales Report', 'class_name' => 'SalesReport', 'has_detail' => 0),
             ),
             'admin' => array(
                 array('url' => 'users', 'name' => 'User Account', 'class_name' => 'Users', 'has_detail' => 0),
-                array('url' => 'settings', 'name' => 'Settings', 'class_name' => 'Settings', 'has_detail' => 0),
+                array('url' => 'logs', 'name' => 'Audit Trails', 'class_name' => 'Logs', 'has_detail' => 0),
+                array('url' => 'profile', 'name' => 'Profile', 'class_name' => 'Profile', 'has_detail' => 0),
             ),
         );
 
@@ -61,7 +64,7 @@ class Menus extends Connection
                     $this->route_settings = [];
                 }
             } else {
-                $this->dir = 'pages/404/index.php';
+                $this->dir = 'error-404.html';
                 $this->route_settings = [];
             }
         }
@@ -71,12 +74,12 @@ class Menus extends Connection
     {
         $UserPrivileges = new UserPrivileges();
         if ($UserPrivileges->check($url, $_SESSION['user']['id']) == 1) {
-            echo '<li class="nav-item">
-            <a class="nav-link" href="./' . $url . '">
-                <i class="ti ti-' . $ti . ' menu-icon"></i>
-                <span class="menu-title">' . $name . '</span>
-            </a>
-        </li>';
+            echo '<li class="sidebar-item">
+                <a href="' . $url . '" class="sidebar-link">
+                    <i class="' . $ti . '"></i>
+                    <span>' . $name . '</span>
+                </a>
+            </li>';
         }
     }
 
@@ -88,20 +91,17 @@ class Menus extends Connection
         $child_label = "";
         foreach ($child as $row) {
             if ($UserPrivileges->check($row[1], $_SESSION['user']['id']) == 1) {
-                $child_label .= '<li class="nav-item"> <a class="nav-link" href="./' . $row[1] . '">' . $row[0] . '</a></li>';
+                $child_label .= '<li class="sidebar-item"> <a class="sidebar-link" href="./' . $row[1] . '">' . $row[0] . '</a></li>';
             }
         }
         if ($child_label != '') {
-            echo '<li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-' . $ui . '" aria-expanded="false" aria-controls="ui-' . $ui . '">
-                <i class="ti ti-' . $ti . ' menu-icon"></i>
-                <span class="menu-title">' . $name . '</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-' . $ui . '">
-                <ul class="nav flex-column sub-menu">' . $child_label . '</ul>
-            </div>
-        </li>';
+           
+            echo '<li class="sidebar-item">
+                <a href="#ui-' . $ui . '" class="sidebar-link">
+                    <i class="' . $ti . '"></i>
+                    <span>' . $name . '</span>
+                </a>
+            </li>';
         }
     }
 }

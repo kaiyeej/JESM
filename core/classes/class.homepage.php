@@ -24,7 +24,7 @@ class Homepage extends Connection
         $m = 1;
         for ($i = 0; $i < 12; $i++) {
            
-            $result = $this->select('tbl_job_order_details as d, tbl_job_order as h', "count(h.jo_id) as count, sum(qty*price) as total", "d.jo_id=h.jo_id AND h.status = 'F' AND MONTH(h.jo_date) = '$m' AND YEAR(h.jo_date) = YEAR('$date')");
+            $result = $this->select('tbl_job_order_details as d, tbl_job_order as h', "count(h.jo_id) as count, sum((d.qty*d.price)+h.service_fee) as total", "d.jo_id=h.jo_id AND h.status = 'F' AND MONTH(h.jo_date) = '$m' AND YEAR(h.jo_date) = YEAR('$date')");
 
             $total_sales = $result->fetch_array();
             
@@ -47,7 +47,7 @@ class Homepage extends Connection
     }
 
     public function total_jo(){
-        $result = $this->select('tbl_job_order_details as d, tbl_job_order as h', "sum(qty*price)", "d.jo_id=h.jo_id AND h.status = 'F'");
+        $result = $this->select('tbl_job_order_details as d, tbl_job_order as h', "sum((d.qty*d.price)+h.service_fee)", "d.jo_id=h.jo_id AND h.status = 'F'");
         $row = $result->fetch_array();
         return $row[0];
     }

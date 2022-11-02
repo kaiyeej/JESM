@@ -16,41 +16,44 @@
         </div>
     </div>
     <section class="section">
-    <div class="card">
-            <div class="card-header">
-                <div class="btn-group divider divider-right">
-                    <div style="float: right">
-                        <a href="#" class="btn btn-primary btn-sm btn-icon-split" onclick="addModal()">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-plus"></i>
-                            </span>
-                            <span class="text">Add Entry</span>
-                        </a>
-                        <a href="#" class="btn btn-danger btn-sm btn-icon-split" onclick='deleteEntry()' id='btn_delete'>
-                            <span class="icon text-white-50">
-                                <i class="fas fa-trash"></i>
-                            </span>
-                            <span class="text">Delete Entry</span>
-                        </a>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-2">
+                            <div class="list-group">
+                                <a href="#" style="background:#3f51b5;text-align:center;color:#9fa8da;" class="list-group-item list-group-item-action" onclick="addModal()">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                    <span class="text">Add</span>
+                                </a>
+                                <a href="#" style="background:#dc3545;text-align:center;color:#9fa8da;" class="list-group-item list-group-item-action" onclick='deleteEntry()' id='btn_delete'>
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                    <span class="text">Delete</span>
+                                </a>
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="col-sm-10">
+                        <table class="table" id="dt_entries">
+                            <thead>
+                                <tr>
+                                    <th><input type='checkbox' onchange="checkAll(this, 'dt_id')"></th>
+                                    <th></th>
+                                    <th>Supplier Name</th>
+                                    <th>Address</th>
+                                    <th>Contact #</th>
+                                    <th>Date Added</th>
+                                    <th>Date Modified</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
-            <div class="card-body">
-                <table class="table" id="dt_entries">
-                    <thead>
-                        <tr>
-                            <th><input type='checkbox' onchange="checkAll(this, 'dt_id')"></th>
-                            <th></th>
-                            <th>Supplier Name</th>
-                            <th>Address</th>
-                            <th>Contact #</th>
-                            <th>Date Added</th>
-                            <th>Date Modified</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
             </div>
         </div>
     </section>
@@ -62,6 +65,7 @@
         $("#dt_entries").DataTable().destroy();
         $("#dt_entries").DataTable({
             "processing": true,
+            "order": [[ 2, 'asc' ]],
             "ajax": {
                 "url": "controllers/sql.php?c=" + route_settings.class_name + "&q=show",
                 "dataSrc": "data"

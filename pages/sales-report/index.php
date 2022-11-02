@@ -7,7 +7,7 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Inventory Report</h3>
+                <h3>Sales Report</h3>
                 <p class="text-subtitle text-muted">Generate reports here</p>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
@@ -27,8 +27,14 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="basic-addon1">Date</span>
-                                <input type="date" value="<?php echo date('Y-m-t', strtotime(date("Y-m-d"))) ?>" class="form-control" id="inv_date" aria-label="Username" aria-describedby="basic-addon1">
+                                <span class="input-group-text" id="basic-addon1">Start Date</span>
+                                <input type="date" class="form-control" id="start_date" value="<?php echo date('Y-m-01', strtotime(date("Y-m-d"))); ?>" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1">End Date</span>
+                                <input type="date" value="<?php echo date('Y-m-t', strtotime(date("Y-m-d"))) ?>" class="form-control" id="end_date" aria-label="Username" aria-describedby="basic-addon1">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -42,19 +48,24 @@
             <div class="card-body" id="print_canvas">
                 <br><center>
                     <h5 class="report-header">JID ELECTRICAL SERVICES MANAGEMENT SYSTEM</h5>
-                    <h5>Inventory Report</h5><br>
+                    <h5>Sales Report</h5><br>
                 </center><br>
 
                 <table class="display expandable-table" id="dt_entries" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Product</th>
-                            <th style="text-align:right;">Cost</th>
                             <th style="text-align:right;">Quantity</th>
+                            <th style="text-align:right;">Amount</th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" style="text-align:right;">Grand Total: 0</td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -66,29 +77,60 @@
     });
 
     function getEntries() {
-        var inv_date = $("#inv_date").val();
+        var start_date = $("#start_date").val();
+        var end_date = $("#end_date").val();
         $("#dt_entries").DataTable().destroy();
         $("#dt_entries").DataTable({
             "searching": false,
             "paging": false,
             "info": false,
             "processing": true,
+            "footerCallback": function(row, data, start, end, display) {
+                var api = this.api(),
+                    data;
+                var intVal = function(i) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                        i : 0;
+                };
+
+                total = api
+                    .column(2)
+                    .data()
+                    .reduce(function(a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                pageTotal = api
+                    .column(2, {
+                        page: 'current'
+                    })
+                    .data()
+                    .reduce(function(a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                $(api.column(2).footer()).html(
+                    "<strong>Grand Total: <span>&#8369;</span> " + this.fnSettings().fnFormatNumber(parseFloat(parseFloat(pageTotal).toFixed(2))) + "</strong>"
+                );
+            },
             "ajax": {
                 "url": "controllers/sql.php?c=" + route_settings.class_name + "&q=generate_report",
                 "dataSrc": "data",
                 "data": {
-                    inv_date: inv_date
+                    start_date: start_date,
+                    end_date: end_date
                 }
             },
             "columns": [{
-                    "data": "product_name"
-                },
-                {
-                    "data": "cost", className: "text-right"
+                    "data": "product"
                 },
                 {
                     "data": "qty", className: "text-right"
+                },
+                {
+                    "data": "total", className: "text-right"
                 }
+
             ]
         });
     }

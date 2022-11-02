@@ -50,7 +50,12 @@ class Products extends Connection
     public function remove()
     {
         $ids = implode(",", $this->inputs['ids']);
-        $this->insert_logs('Deleted Product Entry');
+        $result = $this->select($this->table, $this->name, "$this->pk IN ($ids)");
+        $reference = "";
+        while($row = $result->fetch_array()){
+            $reference .= $row[0].", ";
+        }
+        $this->insert_logs('Deleted Product (Product: '.substr($reference, 0, -2).')');
         return $this->delete($this->table, "$this->pk IN($ids)");
     }
 
