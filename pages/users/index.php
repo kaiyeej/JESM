@@ -42,6 +42,7 @@
                                 <tr>
                                     <th><input type='checkbox' onchange="checkAll(this, 'dt_id')"></th>
                                     <th></th>
+                                    <th></th>
                                     <th>Fullname</th>
                                     <th>Category</th>
                                     <th>Username</th>
@@ -81,6 +82,11 @@
                 "dataSrc": "data"
             },
             "columns": [{
+                    "mRender": function(data, type, row) {
+                        return "<input type='checkbox' value=" + row.user_id + " class='dt_id' style='position: initial; opacity:1;'>";
+                    }
+                },
+                {
                     "mRender": function(data, type, row) {
                         return row.user_category != 'S' ? '' : "<center><button class='btn btn-success btn-circle btn-sm' onclick='getUserPrivileges(" + row.user_id + ")'><span class='bi bi-key'></span></button></center>";
                     }
