@@ -32,16 +32,23 @@ class JobOrder extends Connection
         $fk_det     = $this->inputs[$this->fk_det];
         $Products = new Products;
         $product_cost = $Products->productCost($fk_det);
-        $form = array(
-            $this->pk       => $this->inputs[$this->pk],
-            $this->fk_det   => $fk_det,
-            'qty'           => $this->inputs['qty'],
-            'cost'          => $product_cost,
-            'price'         => $this->inputs['price'],
-            'amount'         => ($this->inputs['price']*$this->inputs['qty'])
-        );
-        
-        return $this->insert($this->table_detail, $form);
+        // check inventory here ...
+        $Inventory = new InventoryReport();
+        $current_balance = $Inventory->currentQty($fk_det);
+        if($current_balance-$this->inputs['qty'] >= 0 OR $fk_det == -1){
+            $form = array(
+                $this->pk       => $this->inputs[$this->pk],
+                $this->fk_det   => $fk_det,
+                'qty'           => $this->inputs['qty'],
+                'cost'          => $product_cost,
+                'price'         => $this->inputs['price'],
+                'amount'         => ($this->inputs['price']*$this->inputs['qty'])
+            );
+            
+            return $this->insert($this->table_detail, $form);
+        }else{
+            return -3;
+        }
     }
 
     public function edit()

@@ -261,6 +261,11 @@ if (!isset($_SESSION['user']['id'])) {
       swal("Cannot proceed!", "Amount is greater than balance!", "warning");
     }
 
+    function insufficient_qty() {
+      swal("Cannot proceed!", "Insufficient Inventory quantity!", "warning");
+    }
+
+
     function failed_query(data) {
       swal("Failed to execute query!", data, "warning");
       //alert('Something is wrong. Failed to execute query. Please try again.');
@@ -578,6 +583,8 @@ if (!isset($_SESSION['user']['id'])) {
             entry_already_exists();
           } else if (json.data == 3) {
             amount_is_greater();
+          } else if(json.data == -3){
+            insufficient_qty();
           } else {
             failed_query(json);
             $("#modalEntry2").modal('hide');

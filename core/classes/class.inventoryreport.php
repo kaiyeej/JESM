@@ -13,9 +13,11 @@ class InventoryReport extends Connection
         $result = $this->select($this->table);
         $rows = array();
         while ($row = $result->fetch_assoc()) {
+            $qty = $this->invQty($row['product_id'], $inv_date);
+
             $row['product_name'] = $row['product_name'];
             $row['cost'] = $row['product_cost'];
-            $row['qty'] = $this->invQty($row['product_id'], $inv_date);
+            $row['qty'] = $qty > 10 ? $qty : "<strong style='color:red;'>".$qty."</strong>" ;
             $rows[] = $row;
         }
         return $rows;
@@ -82,6 +84,21 @@ class InventoryReport extends Connection
         $out_qty = $jo_out_qty[0];
 
         return $in_qty-$out_qty;
+    }
+
+    public function low_inventory(){
+        $result = $this->select($this->table);
+        $total = 0;
+        while ($row = $result->fetch_assoc()) {
+            $qty = $this->currentQty($row['product_id']);
+            if($qty < 10){
+                $total += 1;
+            }else{
+                $total += 0;
+            }
+            
+        }
+        return $total;
     }
 
     public function invQty($product_id, $inv_date){

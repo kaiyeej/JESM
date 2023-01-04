@@ -79,12 +79,24 @@ class Menus extends Connection
             }else{
                 $active = "";
             }
-            echo '<li class="sidebar-item '.$active.'">
-                <a href="' . $url . '" class="sidebar-link">
-                    <i class="' . $ti . '"></i>
-                    <span>' . $name . '</span>
-                </a>
-            </li>';
+
+            if($url == "inventory-report"){
+                $Inv = new InventoryReport();
+                $low_inv = $Inv->low_inventory();
+
+                $warn_badge = $low_inv > 0 ? '<span class="btn btn-danger btn-sm">'.$low_inv.'</span>' : '' ;
+            }else{
+                $warn_badge = "";
+            }
+            
+            echo    '<li class="sidebar-item '.$active.'">
+                        <a href="' . $url . '" class="sidebar-link">
+                            <i class="' . $ti . '"></i>
+                            <span>' . $name . '</span> &nbsp;&nbsp;&nbsp;
+                            '. $warn_badge .'
+                        </a>
+                        
+                    </li>';
         }
     }
 

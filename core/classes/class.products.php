@@ -83,8 +83,13 @@ class Products extends Connection
     public function productCost($primary_id)
     {
         $fetch = $this->select($this->table, "product_cost", "$this->pk = '$primary_id'");
-        $row = $fetch->fetch_assoc();
-        return $row['product_cost'];
+        if($fetch->num_rows > 0){
+            $row = $fetch->fetch_assoc();
+            return $row['product_cost'];
+        }else{
+            return "";
+        }
+        
     }
 
     public function uploadImage()
