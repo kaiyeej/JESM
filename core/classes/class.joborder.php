@@ -132,6 +132,7 @@ class JobOrder extends Connection
         $row = $result->fetch_assoc();
         $row['jo_date'] = date("F j, Y", strtotime($row['jo_date']));
         $row['customer'] = $Customers->name($row['customer_id']);
+        $row['service_fee'] = number_format($row['service_fee'],2);
         $rows[] = $row;
         return $rows;
     }

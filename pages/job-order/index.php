@@ -197,6 +197,7 @@
                 $("#reference_number_span").html(json.data[0].reference_number);
                 $("#jo_date_span").html(json.data[0].jo_date);
                 $("#remarks_span").html(json.data[0].remarks);
+                $("#service_fee_span").html(json.data[0].service_fee);
 
                getJODetails(id);
             }
@@ -336,7 +337,7 @@
         getEntries();
         getSelectOption('Customers', 'customer_id', 'customer_name');
         getSelectOption('Services', 'service_id', 'service_name', "", ['service_fee']);
-        getSelectOption('Products', 'product_id', 'product_name', '', [], '', 'Please Select', '', 'Labor/Service');
+        getSelectOption('Products', 'product_id', 'product_name', '', [], '', 'Please Select', '');
     });
 </script>
 

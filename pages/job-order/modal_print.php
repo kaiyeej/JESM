@@ -10,10 +10,11 @@
                      <center><strong>
                              <h4>JID ELECTRICAL SERVICES MANAGEMENT SYSTEM</h4>
                          </strong></center>
-                     <center><strong>Customer Name: </strong><span id="customer_span"></span></center>
-                     <center><strong>Reference Number: </strong><span id="reference_number_span"></span></center>
-                     <center><strong>Date: </strong><span id="jo_date_span"></span></center>
-                     <center><strong>Remarks: </strong><span id="remarks_span"></span></center><br><br>
+                     <strong>Customer Name: </strong><span id="customer_span"></span><br>
+                     <strong>Reference Number: </strong><span id="reference_number_span"></span><br>
+                     <strong>Date: </strong><span id="jo_date_span"></span><br>
+                     <strong>Remarks: </strong><span id="remarks_span"></span><br>
+                     <strong>Service Fee: </strong><span id="service_fee_span"></span><br><br>
 
 
                      <div class="table-responsive">

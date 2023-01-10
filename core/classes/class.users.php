@@ -76,8 +76,13 @@ class Users extends Connection
     {
         $self = new self;
         $result = $self->select($self->table, $self->name, "$self->pk  = '$primary_id'");
-        $row = $result->fetch_assoc();
-        return $row[$self->name];
+
+        if($result->num_rows > 0){
+            $row = $result->fetch_assoc();
+            return $row[$self->name];
+        }else{
+            return "Not found";
+        }
     }
 
     public function dataRow($primary_id, $field)
@@ -91,7 +96,12 @@ class Users extends Connection
     {
         $self = new self;
         $result = $self->select($self->table, 'user_fullname', "$self->pk  = '$primary_id'");
-        $row = $result->fetch_assoc();
-        return $row['user_fullname'];
+        if($result->num_rows > 0){
+            $row = $result->fetch_assoc();
+            return $row['user_fullname'];
+        }else{
+            return "Not found";
+        }
+        
     }
 }

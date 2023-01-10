@@ -62,8 +62,13 @@ class Products extends Connection
     public function name($primary_id)
     {
         $result = $this->select($this->table, $this->name, "$this->pk = '$primary_id'");
-        $row = $result->fetch_assoc();
-        return $row[$this->name];
+        if($result->num_rows > 0){
+            $row = $result->fetch_assoc();
+            return $row[$this->name];
+        }else{
+            return "Not found";
+        }
+        
     }
 
     public function productID($product_code)
@@ -75,9 +80,14 @@ class Products extends Connection
 
     public function productPrice($primary_id)
     {
-        $fetch = $this->select($this->table, "product_price", "$this->pk = '$primary_id'");
-        $row = $fetch->fetch_assoc();
-        return $row['product_price'];
+        $result = $this->select($this->table, "product_price", "$this->pk = '$primary_id'");
+        if($result->num_rows > 0){
+            $row = $result->fetch_assoc();
+            return $row['product_price'];
+        }else{
+            return "";
+        }
+       
     }
 
     public function productCost($primary_id)
