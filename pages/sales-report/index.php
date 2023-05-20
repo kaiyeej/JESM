@@ -62,9 +62,6 @@
                     <tbody>
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <td colspan="3" style="text-align:right;">Grand Total: 0</td>
-                        </tr>
                     </tfoot>
                 </table>
             </div>
@@ -94,13 +91,6 @@
                         typeof i === 'number' ?
                         i : 0;
                 };
-
-                total = api
-                    .column(2)
-                    .data()
-                    .reduce(function(a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
                 pageTotal = api
                     .column(2, {
                         page: 'current'
@@ -114,7 +104,8 @@
                 );
             },
             "ajax": {
-                "url": "controllers/sql.php?c=" + route_settings.class_name + "&q=generate_report",
+                "type":"POST",
+                "url": "controllers/sql.php?c=JobOrder&q=generate_report",
                 "dataSrc": "data",
                 "data": {
                     start_date: start_date,
